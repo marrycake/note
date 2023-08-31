@@ -1,0 +1,1 @@
+add_library(LISTS_LIB SHARED ${LISTS_SOURCE})

@@ -1,0 +1,29 @@
+# `-allow-enabling-analyzer-alpha-checkers` should be passed to clang-tidy for CSA checkers named `clang-analyzer-alpha.*`
+# `aggressive-binary-operation-simplification` should be enabled (via `-Xclang -analyzer-config -Xclang aggressive-binary-operation-simplification=true` in clang)
+# there is some problem in `clang-analyzer-alpha.clone.*`, so do not enable it
+# `clang-analyzer-alpha.deadcode.*` is just too verbose to enable
+Checks: >-
+  -*,
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  modernize-*,
+  -modernize-use-trailing-return-type,
+  performance-*,
+  google-default-arguments,
+  google-global-names-in-headers,
+  google-explicit-constructor,
+
+WarningsAsErrors: false
+HeaderFilterRegex: ""
+AnalyzeTemporaryDtors: false
+FormatStyle: google
+
+CheckOptions:
+  # `cppcoreguidelines-special-member-functions` is enabled, refer to https://en.cppreference.com/w/cpp/language/rule_of_three
+  - key: cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value: True
+  - key: performance-move-const-arg.CheckTriviallyCopyableMove
+    value: True
+  - key: cppcoreguidelines-special-member-functions.AllowMissingMoveFunctionsWhenCopyIsDeleted
+    value: True
